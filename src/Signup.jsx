@@ -11,10 +11,11 @@ export default function App() {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "90vh", backgroundColor: "red", }}>
+    <div className="flex justify-center items-center flex-col bg-red-600 h-[100vh]">
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Email Input */}
         <input
+        className="bg-white w-full"
           {...register("email", {
             required: "Email is required",
            
@@ -27,6 +28,7 @@ export default function App() {
 
         {/* Name Input */}
         <input
+        className="bg-white w-full"
           {...register("name", {
             required: "Name is required",
           })}
@@ -38,6 +40,7 @@ export default function App() {
 
         {/* Password Input */}
         <input
+        className="bg-white w-full"
           {...register("password", {
             required: "Password is required",
             minLength: {
@@ -58,7 +61,7 @@ export default function App() {
         {errors.password && <span>{errors.password.message}</span>}
 
         <br />
-        <input type="submit" />
+        <input className="bg-white w-full" type="submit" />
       </form>
     </div>
   );
