@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-
+import axios from "axios";
 export default function App() {
   const {
     register,
@@ -8,7 +8,21 @@ export default function App() {
     trigger,
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async(data) =>{
+    console.log(data);
+    await axios.post(`http://localhost:3000/api/signup`,data)
+    .then((res) => {
+    alert(res.data.message)
+   
+    })
+    .catch((err) => {
+      alert(err.response.data.message)
+    })
+
+
+  } 
+  
+
 
   return (
     <div className="flex justify-center items-center flex-col bg-red-600 h-[100vh]">
