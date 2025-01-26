@@ -1,67 +1,62 @@
-
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-export default function App() {
-  
+export default function LoginForm() {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, trigger } = useForm();
 
-  // On component mount, load the email from localStorage
+  // Load cached email from localStorage on component mount
   useEffect(() => {
     const cachedEmail = localStorage.getItem('email');
-    
+    // Placeholder: Use cachedEmail if necessary in the component logic
   }, []);
 
-  const onSubmit = async (data) => {
+  // Handles login form submission
+  const handleLoginSubmit = async (formData) => {
     try {
-      const res = await axios.post(`http://localhost:3000/api/login`, data);
-      alert(res.data.message);
-      if (res.data.message === "login success") {
-       
-        localStorage.setItem('email', data.email);
-        navigate("/", { state: data });
+      const response = await axios.post("http://localhost:3000/api/login", formData);
+      alert(response.data.message);
+
+      if (response.data.message === "login success") {
+        localStorage.setItem('email', formData.email); // Save email to localStorage
+        navigate("/", { state: formData }); // Redirect to home page
       }
-    } catch (err) {
-      alert(err.response?.data?.message || 'Login failed');
+    } catch (error) {
+      alert(error.response?.data?.message || 'Login failed');
     }
   };
 
   return (
-    <div className="flex justify-center items-center flex-col bg-red-600 h-[100vh]">
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div>
+      {/* Login Form */}
+      <form onSubmit={handleSubmit(handleLoginSubmit)}>
+        {/* Email Input */}
         <input
-          className="bg-white w-full"
           {...register("email", { required: "Email is required" })}
-          onBlur={() => trigger("email")}
+          onBlur={() => trigger("email")} // Validate on blur
           placeholder="Email ID"
         />
-        <br />
         {errors.email && <span>{errors.email.message}</span>}
 
+        {/* Password Input */}
         <input
-          className="bg-white w-full"
           {...register("password", {
             required: "Password is required",
             minLength: {
               value: 8,
               message: "Password must be at least 8 characters long",
             },
-            pattern: {
-              value: /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              message: "Password must include at least one uppercase letter and one special character",
-            },
           })}
-          onBlur={() => trigger("password")}
+          onBlur={() => trigger("password")} // Validate on blur
           placeholder="Your password"
           type="password"
         />
-        <br />
         {errors.password && <span>{errors.password.message}</span>}
-        <br />
-        <input className="bg-white w-full" type="submit" />
+
+        {/* Submit Button */}
+        <input type="submit" value="Login" />
       </form>
     </div>
   );

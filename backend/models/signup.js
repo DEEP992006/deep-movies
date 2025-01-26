@@ -1,28 +1,10 @@
 const mongoose = require("mongoose");
 
-
 const signupSchema = new mongoose.Schema({
-  email: {
-    type: String,
-  },
-  name: {
-    type: String,
-    
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 8,
-  },
-  movies: [
-    {
-      id: {
-        type: String,
-        
-      },
-    },
-  ],
+  email: { type: String, required: true },
+  name: { type: String },
+  password: { type: String, required: true, minlength: 8 },
+  movies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Movie" }],
 });
 
-const Signup = mongoose.model("Signup", signupSchema);
-module.exports = Signup;
+module.exports = mongoose.model("Signup", signupSchema);

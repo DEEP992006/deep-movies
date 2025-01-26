@@ -1,29 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setEmail } from './store'; // Import your Redux action
 
-const Home = () => {
+const HomePage = () => {
   const dispatch = useDispatch();
-  const email = useSelector((state) => state.user.email);
+  const [userEmail, setUserEmail] = useState("");
 
-  // Check localStorage on mount and update Redux state if necessary
+  // Retrieve email from localStorage on component mount
   useEffect(() => {
-    if (!email) {
+    if (!userEmail) {
       const cachedEmail = localStorage.getItem('email');
       if (cachedEmail) {
-        dispatch(setEmail(cachedEmail));
+        setUserEmail(cachedEmail);
       }
     }
-  }, [email, dispatch]);
+  }, [userEmail]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-[100vh] bg-gray-200">
-      <h1 className="text-2xl font-bold">Home</h1>
-      <h2 className="text-xl">
-        Email: {email || 'No Email Set'}
-      </h2>
+    <div>
+      <h1>Welcome to MovieMate</h1>
+      <h2>Email: {userEmail || 'No Email Set'}</h2>
     </div>
   );
 };
 
-export default Home;
+export default HomePage;
