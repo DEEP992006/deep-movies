@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
-export default function App() {
+export default function Signup() {
+  const navigate = useNavigate();
+  // Initialize form functions from react-hook-form
   const {
     register,
     handleSubmit,
@@ -8,24 +12,34 @@ export default function App() {
     trigger,
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  // Handles form submission
+  const handleFormSubmit = async (formData) => {
+    console.log(formData);
+
+    try {
+      const response = await axios.post("http://localhost:3000/api/signup", formData);
+      alert(response.data.message);
+    } catch (error) {
+      alert(error.response.data.message);
+    }
+    navigate("/login");
+  };
 
   return (
-    <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "90vh", backgroundColor: "red", }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Email Input */}
+    <div>
+      {/* Signup Form */}
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
+        {/* Email Input Field */}
         <input
           {...register("email", {
             required: "Email is required",
-           
           })}
           onBlur={() => trigger("email")} // Validate on blur
           placeholder="Email ID"
         />
-        <br />
         {errors.email && <span>{errors.email.message}</span>}
 
-        {/* Name Input */}
+        {/* Name Input Field */}
         <input
           {...register("name", {
             required: "Name is required",
@@ -33,10 +47,9 @@ export default function App() {
           onBlur={() => trigger("name")} // Validate on blur
           placeholder="Enter your name"
         />
-        <br />
         {errors.name && <span>{errors.name.message}</span>}
 
-        {/* Password Input */}
+        {/* Password Input Field */}
         <input
           {...register("password", {
             required: "Password is required",
@@ -44,21 +57,15 @@ export default function App() {
               value: 8,
               message: "Password must be at least 8 characters long",
             },
-            pattern: {
-              value: /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              message:
-                "Password must include at least one uppercase letter and one special character",
-            },
           })}
           onBlur={() => trigger("password")} // Validate on blur
           placeholder="Your password"
           type="password"
         />
-        <br />
         {errors.password && <span>{errors.password.message}</span>}
 
-        <br />
-        <input type="submit" />
+        {/* Submit Button */}
+        <input type="submit" value="Signup" />
       </form>
     </div>
   );
