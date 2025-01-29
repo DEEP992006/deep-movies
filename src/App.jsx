@@ -9,7 +9,7 @@ import NewMovie from "./NewMovie";
 function App() {
   return (
     <Router>
-      <div className="w-full h-full">
+      <div className="w-full h-full ">
         <Navbar />
         <div className="pt-16"> {/* Offset for fixed navbar */}
           <Routes>

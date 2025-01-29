@@ -25,7 +25,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-[90vh] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-800 rounded-xl shadow-2xl p-8">
         <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent text-center">
           Sign Up
