@@ -1,7 +1,12 @@
 @import "tailwindcss";
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
- 
+/* Hide scrollbar for all browsers */
+body {
+  overflow-y: scroll; /* Ensures scrolling works */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Edge */
+}
+
