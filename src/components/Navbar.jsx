@@ -71,8 +71,8 @@ const Navbar = () => {
           {/* Left Section - Logo and Navigation */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center" onClick={closeMobileMenu}>
-              <span className="text-white text-2xl font-bold">Movie</span>
-              <span className="text-blue-500 text-2xl font-bold ml-1">Hub</span>
+              <span className="text-white text-2xl font-bold"> Deep</span>
+              <span className="text-blue-500 text-2xl font-bold ml-1">Movies</span>
             </Link>
 
             {/* Desktop Navigation */}
