@@ -3,6 +3,24 @@ const router = express.Router();
 const Signup = require("../models/signup"); // Import Signup model
 const Movie = require("../models/movies"); // Import Movie model
 
+// Search movies by title
+// In your backend route file
+router.get('/search', async (req, res) => {
+  try {
+    const query = req.query.q.toLowerCase();
+    const movies = await Movie.find({
+      $or: [
+        { title: { $regex: query, $options: 'i' } },
+        { description: { $regex: query, $options: 'i' } },
+        { genre: { $regex: query, $options: 'i' } }
+      ]
+    });
+    res.json({ movies });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // Get all movies
 router.get("/", async (req, res) => {
   try {
@@ -114,5 +132,6 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 module.exports = router;

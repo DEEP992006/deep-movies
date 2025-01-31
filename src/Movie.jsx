@@ -13,8 +13,7 @@ function Movie() {
       try {
         const response = await axios.get(`http://localhost:3000/movie/${id}`);
         setMovie(response.data.moviesList); // ⚠️ `moviesList` is likely an array, should be `moviesList[0]`
-        console.log(moviesList); // ⚠️ `moviesList` is undefined, should be `response.data.moviesList`
-        
+       
       } catch (error) {
         console.error("Error fetching movie:", error); // ✅ Catch API errors
       }

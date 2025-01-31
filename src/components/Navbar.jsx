@@ -4,12 +4,22 @@ import { Search, User, Bell, Upload, Menu, X, LogOut } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);  // Toggle categories open/close
   const [userEmail, setUserEmail] = useState(null);
-  const navigate = useNavigate();
-
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchOpen(false);
+      setIsOpen(false); // Close mobile menu
+    }
+  };
   // Check local storage for user email on component mount
   useEffect(() => {
     const storedEmail = localStorage.getItem('email');
@@ -92,17 +102,19 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Center Section - Search Bar */}
-          <div className="hidden md:flex flex-1 justify-center max-w-md px-4">
-            <div className="w-full relative">
-              <input
-                type="text"
-                placeholder="Search movies..."
-                className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            </div>
-          </div>
+          {/* Desktop Search */}
+  <div className="hidden md:flex flex-1 justify-center max-w-md px-4">
+    <form onSubmit={handleSearch} className="w-full relative search-container">
+      <input
+        type="text"
+        placeholder="Search movies..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+    </form>
+  </div>
 
           {/* Right Section - User Actions */}
           <div className="flex items-center space-x-4">

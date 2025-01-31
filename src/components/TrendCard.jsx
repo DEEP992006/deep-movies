@@ -2,16 +2,26 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * TrendCard Component
+ * 
+ * Displays a trending movie card with an image, title, rating, 
+ * and buttons for downloading or viewing more details.
+ */
 const TrendCard = ({ img, movieId, title, rating }) => {
-  const [link, setLink] = useState("");
-  const navigate = useNavigate();
+  const [link, setLink] = useState(""); // Stores the download link
+  const navigate = useNavigate(); // Hook for navigation
 
+  /**
+   * Handles movie download.
+   * Fetches the download link from the backend and redirects the user.
+   */
   const download = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/movie/download/${movieId}`
-      );
-      setLink(response.data.movie.downloadLink);
+      const response = await axios.get(`http://localhost:3000/movie/download/${movieId}`);
+      setLink(response.data.movie.downloadLink); // Store the download link
+
+      // Redirect to the download link if available
       if (response.data.movie.downloadLink) {
         window.location.href = response.data.movie.downloadLink;
       }
@@ -20,12 +30,17 @@ const TrendCard = ({ img, movieId, title, rating }) => {
     }
   };
 
+  /**
+   * Navigates to the movie details page.
+   */
   const show = () => {
     navigate(`/movie/${movieId}`);
   };
 
   return (
     <div className="group relative w-full bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+      
+      {/* Movie Poster */}
       <div className="aspect-video bg-gray-700 relative overflow-hidden">
         <img
           src={img}
@@ -34,7 +49,9 @@ const TrendCard = ({ img, movieId, title, rating }) => {
           loading="lazy"
         />
 
+        {/* Hover Overlay with Buttons */}
         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+          {/* Download Button */}
           <button
             onClick={download}
             className="p-3 bg-white/10 rounded-full backdrop-blur-sm hover:bg-white/20 transition-colors"
@@ -53,6 +70,8 @@ const TrendCard = ({ img, movieId, title, rating }) => {
               />
             </svg>
           </button>
+
+          {/* View Details Button */}
           <button
             onClick={show}
             className="p-3 bg-white/10 rounded-full backdrop-blur-sm hover:bg-white/20 transition-colors"
@@ -79,6 +98,8 @@ const TrendCard = ({ img, movieId, title, rating }) => {
           </button>
         </div>
       </div>
+
+      {/* Movie Title and Rating */}
       <div className="p-3 bg-gray-900 text-white text-sm flex justify-between items-center">
         <span className="font-semibold">{title}</span>
         <span className="text-yellow-400 font-semibold">⭐ {rating}</span>

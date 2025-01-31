@@ -25,8 +25,6 @@ const NewMovie = () => {
   const onSubmit = async (data) => {
     const email = localStorage.getItem("email");
     const movieData = { email, ...data };
-console.log(movieData);
-
     try {
       setIsLoading(true);
       const response = await axios.post("http://localhost:3000/movie/new", movieData);

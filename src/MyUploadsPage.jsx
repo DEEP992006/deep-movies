@@ -22,15 +22,6 @@ const MyUploadsPage = () => {
       }
     fetchMovieIds()
   }, []);
- useEffect(() => {
-  console.log(uploadedMovies);
-  
- }, [uploadedMovies])
- 
-  
-
-  // Fetch movie details for each movie ID
-
 
   // Handle delete movie
   const handleDelete = async (movieId) => {

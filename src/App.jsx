@@ -10,6 +10,8 @@ import TrendingPage from "./TrendingPage";
 import ScrollToTop from "./components/ScrollToTop";
 import CategoryPage from "./CategoryPage";
 import MyUploadsPage from "./MyUploadsPage";
+import SearchResults from "./ SearchResults";
+
 function App() {
   
   return (
@@ -22,6 +24,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/search" element={<SearchResults />} />
             <Route path="/trending" element={<TrendingPage />} />
             <Route path="/upload" element={<NewMovie />} />
             <Route path="/login" element={<Login />} />

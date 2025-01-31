@@ -48,8 +48,6 @@ const Profile = () => {
             // Save changes
             axios.put(`http://localhost:3000/profile/${email}`, editedProfile)
                 .then(() => {
-                    console.log(editedProfile);
-                    
                     setProfile(editedProfile);
                     setIsEditing(false);
                     alert('Profile updated successfully');
