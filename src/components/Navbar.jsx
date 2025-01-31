@@ -6,12 +6,11 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-
-
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);  // Toggle categories open/close
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false); // Toggle categories open/close
   const [userEmail, setUserEmail] = useState(null);
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -20,6 +19,7 @@ const Navbar = () => {
       setIsOpen(false); // Close mobile menu
     }
   };
+
   // Check local storage for user email on component mount
   useEffect(() => {
     const storedEmail = localStorage.getItem('email');
@@ -33,6 +33,7 @@ const Navbar = () => {
     localStorage.removeItem('email');
     setUserEmail(null);
     navigate('/');
+    setIsOpen(false); // Close mobile menu
   };
 
   // Close menus when clicking outside
@@ -45,7 +46,7 @@ const Navbar = () => {
         setIsSearchOpen(false);
       }
       if (!e.target.closest('.categories-menu')) {
-        setIsCategoriesOpen(false);  // Close categories when clicking outside
+        setIsCategoriesOpen(false); // Close categories when clicking outside
       }
     };
     document.addEventListener('click', closeMenus);
@@ -53,8 +54,14 @@ const Navbar = () => {
   }, []);
 
   // Handle categories dropdown click
-  const handleCategoriesClick = () => {
-    setIsCategoriesOpen(!isCategoriesOpen);  // Toggle category menu on click
+  const handleCategoriesClick = (e) => {
+    e.stopPropagation(); // Stop event propagation
+    setIsCategoriesOpen(!isCategoriesOpen); // Toggle category menu on click
+  };
+
+  // Close mobile menu after navigation
+  const closeMobileMenu = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -63,22 +70,22 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Left Section - Logo and Navigation */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center" onClick={closeMobileMenu}>
               <span className="text-white text-2xl font-bold">Movie</span>
               <span className="text-blue-500 text-2xl font-bold ml-1">Hub</span>
             </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center ml-8 space-x-6">
-              <Link to="/" className="text-gray-300 hover:text-white transition-colors">
+              <Link to="/" className="text-gray-300 hover:text-white transition-colors" onClick={closeMobileMenu}>
                 Home
               </Link>
-              <Link to="/trending" className="text-gray-300 hover:text-white transition-colors">
+              <Link to="/trending" className="text-gray-300 hover:text-white transition-colors" onClick={closeMobileMenu}>
                 Trending
               </Link>
               <div className="relative categories-menu">
                 <button
-                  onClick={handleCategoriesClick}  // Toggle categories on click
+                  onClick={handleCategoriesClick} // Toggle categories on click
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   Categories
@@ -91,6 +98,10 @@ const Navbar = () => {
                           key={category}
                           to={`/category/${category}`}
                           className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+                          onClick={() => {
+                            closeMobileMenu(); // Close the mobile menu
+                            setIsCategoriesOpen(false); // Close the categories dropdown
+                          }}
                         >
                           {category}
                         </Link>
@@ -103,25 +114,31 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Search */}
-  <div className="hidden md:flex flex-1 justify-center max-w-md px-4">
-    <form onSubmit={handleSearch} className="w-full relative search-container">
-      <input
-        type="text"
-        placeholder="Search movies..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-    </form>
-  </div>
+          <div className="hidden md:flex flex-1 justify-center max-w-md px-4">
+            <form onSubmit={handleSearch} className="w-full relative search-container">
+              <input
+                type="text"
+                placeholder="Search movies..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            </form>
+          </div>
 
           {/* Right Section - User Actions */}
           <div className="flex items-center space-x-4">
             {userEmail ? (
               <>
                 {/* Notifications */}
-                <button className="p-2 text-gray-300 hover:text-white relative">
+                <button
+                  className="p-2 text-gray-300 hover:text-white relative"
+                  onClick={() => {
+                    navigate('/notifications');
+                    closeMobileMenu();
+                  }}
+                >
                   <Bell className="h-5 w-5" />
                   <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"></span>
                 </button>
@@ -130,6 +147,7 @@ const Navbar = () => {
                 <Link
                   to="/upload"
                   className="hidden md:flex items-center text-gray-300 hover:text-white"
+                  onClick={closeMobileMenu}
                 >
                   <Upload className="h-5 w-5 mr-1" />
                   <span>Upload</span>
@@ -155,20 +173,16 @@ const Navbar = () => {
                         <Link
                           to="/profile"
                           className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+                          onClick={closeMobileMenu}
                         >
                           Profile
                         </Link>
                         <Link
                           to="/uploads"
                           className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+                          onClick={closeMobileMenu}
                         >
                           My Uploads
-                        </Link>
-                        <Link
-                          to="/watchlist"
-                          className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
-                        >
-                          Watchlist
                         </Link>
                         <button
                           onClick={handleLogout}
@@ -187,12 +201,14 @@ const Navbar = () => {
                 <Link
                   to="/login"
                   className="text-gray-300 hover:text-white transition-colors font-medium"
+                  onClick={closeMobileMenu}
                 >
                   Login
                 </Link>
                 <Link
                   to="/signup"
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-md font-medium"
+                  onClick={closeMobileMenu}
                 >
                   Signup
                 </Link>
@@ -216,23 +232,26 @@ const Navbar = () => {
               <Link
                 to="/"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+                onClick={closeMobileMenu}
               >
                 Home
               </Link>
               <Link
                 to="/trending"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+                onClick={closeMobileMenu}
               >
                 Trending
               </Link>
+
               {/* Categories in Mobile Menu */}
               <div className="relative">
-                <button
-                  onClick={handleCategoriesClick}  // Toggle categories on click
-                  className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+                <div
+                  onClick={handleCategoriesClick}
+                  className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 cursor-pointer"
                 >
                   Categories
-                </button>
+                </div>
                 {isCategoriesOpen && (
                   <div className="pl-4">
                     {['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi'].map((category) => (
@@ -240,6 +259,11 @@ const Navbar = () => {
                         key={category}
                         to={`/category/${category}`}
                         className="block px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700"
+                        onClick={(e) => {
+                          e.stopPropagation(); // Stop event propagation
+                          closeMobileMenu(); // Close the mobile menu
+                          setIsCategoriesOpen(false); // Close the categories dropdown
+                        }}
                       >
                         {category}
                       </Link>
@@ -247,17 +271,20 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
+
               {userEmail && (
                 <>
                   <Link
                     to="/profile"
                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+                    onClick={closeMobileMenu}
                   >
                     Profile
                   </Link>
                   <Link
                     to="/uploads"
                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+                    onClick={closeMobileMenu}
                   >
                     My Uploads
                   </Link>
@@ -269,13 +296,18 @@ const Navbar = () => {
                   </button>
                 </>
               )}
+
               {/* Mobile Search */}
               <div className="px-3 py-2">
-                <input
-                  type="text"
-                  placeholder="Search movies..."
-                  className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                <form onSubmit={handleSearch}>
+                  <input
+                    type="text"
+                    placeholder="Search movies..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </form>
               </div>
             </div>
           </div>

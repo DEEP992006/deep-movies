@@ -11,6 +11,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import CategoryPage from "./CategoryPage";
 import MyUploadsPage from "./MyUploadsPage";
 import SearchResults from "./ SearchResults";
+import NotificationPage from "./components/NotificationPage";
+import NotificationsForm from "./components/NotificationForm";
 
 function App() {
   
@@ -19,11 +21,15 @@ function App() {
       <ScrollToTop />
       <div className="w-full h-full ">
         <Navbar />
+        
+
         <div className="pt-16"> {/* Offset for fixed navbar */}
          
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/notifications" element={<NotificationPage />} />
+            <Route path="/ts" element={<NotificationsForm />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/trending" element={<TrendingPage />} />
             <Route path="/upload" element={<NewMovie />} />

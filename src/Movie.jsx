@@ -4,9 +4,9 @@ import axios from "axios";
 import { Download, Play, Star, Clock, Calendar } from "lucide-react";
 
 function Movie() {
-  const { id } = useParams(); // ✅ Extract movie ID from URL params
-  const [movie, setMovie] = useState(null); // ✅ State to store movie details
-  const [isDownloading, setIsDownloading] = useState(false); // ✅ Track download state
+  const { id } = useParams(); //Extract movie ID from URL params
+  const [movie, setMovie] = useState(null); // State to store movie details
+  const [isDownloading, setIsDownloading] = useState(false); //Track download state
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -15,33 +15,33 @@ function Movie() {
         setMovie(response.data.moviesList); // ⚠️ `moviesList` is likely an array, should be `moviesList[0]`
        
       } catch (error) {
-        console.error("Error fetching movie:", error); // ✅ Catch API errors
+        console.error("Error fetching movie:", error); // catch API errors
       }
     };
     fetchMovie();
-  }, [id]); // ✅ Re-fetch movie if ID changes
+  }, [id]); // e-fetch movie if ID changes
 
   // Function to handle movie download
   const handleDownload = async () => {
     setIsDownloading(true);
     try {
-      window.location.href = movie.downloadLink; // ✅ Redirect to download link
+      window.location.href = movie.downloadLink; // Redirect to download link
     } catch (error) {
-      console.error("Download failed:", error); // ✅ Catch download errors
+      console.error("Download failed:", error); //Catch download errors
     }
     setIsDownloading(false);
   };
 
   // Function to handle trailer redirection
   const handleWatchTrailer = () => {
-    if (movie.tailorLink) { // ⚠️ Typo: should be `trailerLink`, unless it's named `tailorLink` in API
-      window.open(movie.tailorLink); // ✅ Open trailer in a new tab
+    if (movie.tailorLink) { //Typo: should be `trailerLink`, unless it's named `tailorLink` in API
+      window.open(movie.tailorLink); // Open trailer in a new tab
     } else {
-      alert("no tailor"); // ⚠️ Consider a better user-friendly message
+      alert("no tailor"); // Consider a better user-friendly message
     }
   };
 
-  if (!movie) return <div className="min-h-screen bg-gray-900"></div>; // ✅ Show blank screen while loading
+  if (!movie) return <div className="min-h-screen bg-gray-900"></div>; // Show blank screen while loading
 
   return (
     <div className="min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 pt-1 sm:pt-1">
@@ -56,13 +56,13 @@ function Movie() {
             />
           </div>
 
-          {/* ✅ Movie Details */}
+          {/*Movie Details */}
           <div className="lg:w-2/3 text-white">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
               {movie.title}
             </h1>
 
-            {/* ✅ Metadata (Year, Duration, Rating) */}
+            {/* Metadata (Year, Duration, Rating) */}
             <div className="flex flex-wrap gap-4 mb-6">
               <div className="flex items-center bg-gray-700 px-3 py-1 rounded-lg">
                 <Calendar className="h-5 w-5 mr-2 text-blue-400" />
@@ -78,12 +78,12 @@ function Movie() {
               </div>
             </div>
 
-            {/* ✅ Movie Description */}
+            {/* Movie Description */}
             <p className="text-gray-300 mb-6 text-lg leading-relaxed">
               {movie.description}
             </p>
 
-            {/* ✅ Genre Tags */}
+            {/* Genre Tags */}
             <div className="flex flex-wrap gap-2 mb-8">
               {movie.genre?.split(",").map((genre) => (
                 <span
@@ -95,11 +95,11 @@ function Movie() {
               ))}
             </div>
 
-            {/* ✅ Action Buttons */}
+            {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={handleDownload}
-                disabled={isDownloading} // ✅ Disable while downloading
+                disabled={isDownloading} // Disable while downloading
                 className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-all font-medium gap-2"
               >
                 <Download className="h-5 w-5" />
