@@ -12,15 +12,15 @@ export default function Signup() {
     trigger,
   } = useForm();
 
+  // Handles form submission
   const handleFormSubmit = async (formData) => {
-    console.log(formData);
-
     try {
       const response = await axios.post("http://localhost:3000/api/signup", formData);
       alert(response.data.message);
       navigate("/login");
     } catch (error) {
-      alert(error.response.data.message);
+      console.error("Signup Error:", error);
+      alert(error.response?.data?.message || "Signup failed. Please try again.");
     }
   };
 

@@ -13,10 +13,10 @@ export default function LoginForm() {
     trigger,
   } = useForm();
 
-  // Load cached email from localStorage on component mount
+  // Load cached email from localStorage when component mounts
   useEffect(() => {
     const cachedEmail = localStorage.getItem('email');
-    // Placeholder: Use cachedEmail if necessary in the component logic
+    // If needed, pre-fill email input (currently not used)
   }, []);
 
   // Handles login form submission
@@ -26,11 +26,12 @@ export default function LoginForm() {
       alert(response.data.message);
 
       if (response.data.message === "login success") {
-        localStorage.setItem('email', formData.email); // Save email to localStorage
+        localStorage.setItem('email', formData.email); // Store email for persistence
         navigate("/", { state: formData }); // Redirect to home page
       }
     } catch (error) {
-      alert(error.response?.data?.message || 'Login failed');
+      console.error("Login Error:", error);
+      alert(error.response?.data?.message || "Login failed, please try again.");
     }
   };
 
@@ -42,7 +43,7 @@ export default function LoginForm() {
         </h2>
 
         <form onSubmit={handleSubmit(handleLoginSubmit)} className="space-y-6">
-          {/* Email Input */}
+          {/* Email Input Field */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
               Email
@@ -54,16 +55,14 @@ export default function LoginForm() {
                 type="email"
                 {...register("email", { required: "Email is required" })}
                 onBlur={() => trigger("email")}
-                placeholder="Email ID"
+                placeholder="Enter your email"
                 className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            {errors.email && (
-              <p className="text-sm text-red-400 mt-1">{errors.email.message}</p>
-            )}
+            {errors.email && <p className="text-sm text-red-400 mt-1">{errors.email.message}</p>}
           </div>
 
-          {/* Password Input */}
+          {/* Password Input Field */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
               Password
@@ -75,19 +74,14 @@ export default function LoginForm() {
                 type="password"
                 {...register("password", {
                   required: "Password is required",
-                  minLength: {
-                    value: 8,
-                    message: "Password must be at least 8 characters long",
-                  },
+                  minLength: { value: 8, message: "Password must be at least 8 characters" },
                 })}
                 onBlur={() => trigger("password")}
-                placeholder="Your password"
+                placeholder="Enter your password"
                 className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            {errors.password && (
-              <p className="text-sm text-red-400 mt-1">{errors.password.message}</p>
-            )}
+            {errors.password && <p className="text-sm text-red-400 mt-1">{errors.password.message}</p>}
           </div>
 
           {/* Submit Button */}

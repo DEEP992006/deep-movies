@@ -25,6 +25,7 @@ app.use("/api/signup", signupRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/profile", profileRoutes);
 app.use("/movie",movieRoutes)
+
 // Start server
 app.listen(3000, () => {
   console.log("Server running on http://localhost:3000");

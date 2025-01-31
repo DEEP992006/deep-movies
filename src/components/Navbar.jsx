@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, User, Bell, Upload, Menu, X, Film, LogOut } from 'lucide-react';
+import { Search, User, Bell, Upload, Menu, X, LogOut } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);  // Toggle categories open/close
   const [userEmail, setUserEmail] = useState(null);
   const navigate = useNavigate();
 
@@ -33,13 +34,21 @@ const Navbar = () => {
       if (!e.target.closest('.search-container')) {
         setIsSearchOpen(false);
       }
+      if (!e.target.closest('.categories-menu')) {
+        setIsCategoriesOpen(false);  // Close categories when clicking outside
+      }
     };
     document.addEventListener('click', closeMenus);
     return () => document.removeEventListener('click', closeMenus);
   }, []);
 
+  // Handle categories dropdown click
+  const handleCategoriesClick = () => {
+    setIsCategoriesOpen(!isCategoriesOpen);  // Toggle category menu on click
+  };
+
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-gray-800 shadow-md border-b border-gray-700 ">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-gray-800 shadow-md border-b border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Left Section - Logo and Navigation */}
@@ -57,23 +66,28 @@ const Navbar = () => {
               <Link to="/trending" className="text-gray-300 hover:text-white transition-colors">
                 Trending
               </Link>
-              <div className="relative group">
-                <button className="text-gray-300 hover:text-white transition-colors">
+              <div className="relative categories-menu">
+                <button
+                  onClick={handleCategoriesClick}  // Toggle categories on click
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Categories
                 </button>
-                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 hidden group-hover:block">
-                  <div className="py-1">
-                    {['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi'].map((category) => (
-                      <Link
-                        key={category}
-                        to={`/category/${category.toLowerCase()}`}
-                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
-                      >
-                        {category}
-                      </Link>
-                    ))}
+                {isCategoriesOpen && (
+                  <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5">
+                    <div className="py-1">
+                      {['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi'].map((category) => (
+                        <Link
+                          key={category}
+                          to={`/category/${category}`}
+                          className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+                        >
+                          {category}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -84,7 +98,7 @@ const Navbar = () => {
               <input
                 type="text"
                 placeholder="Search movies..."
-                className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             </div>
@@ -199,6 +213,28 @@ const Navbar = () => {
               >
                 Trending
               </Link>
+              {/* Categories in Mobile Menu */}
+              <div className="relative">
+                <button
+                  onClick={handleCategoriesClick}  // Toggle categories on click
+                  className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+                >
+                  Categories
+                </button>
+                {isCategoriesOpen && (
+                  <div className="pl-4">
+                    {['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi'].map((category) => (
+                      <Link
+                        key={category}
+                        to={`/category/${category}`}
+                        className="block px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700"
+                      >
+                        {category}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
               {userEmail && (
                 <>
                   <Link
@@ -226,7 +262,7 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder="Search movies..."
-                  className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                  className="w-full bg-gray-700 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
