@@ -2,6 +2,8 @@
 
 A **modern** and **feature-packed** movie downloading platform with a sleek UI, categorized trending movies, real-time notifications, and a smooth user experience! 🚀  
 
+[**🔗 Live Demo**](https://movie-recomendationi-deploy.vercel.app/)  
+
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)  
 ![Tech Stack](https://img.shields.io/badge/Stack-MERN-blueviolet)  
 ![Build](https://img.shields.io/badge/Build-Passing-brightgreen)  
@@ -10,25 +12,25 @@ A **modern** and **feature-packed** movie downloading platform with a sleek UI, 
 
 ## 📌 **Features**  
 
-✅ **Trending Movies Section** – Stay updated with the latest releases 🔥  
-✅ **Category-Based Browsing** – Easily find movies in your favorite genres 🎭  
-✅ **Real-time Notifications** – Never miss an update with a modern notification sidebar 🔔  
-✅ **Sleek & Modern UI** – Fully responsive with an intuitive design ✨  
-✅ **Sidebar Navigation** – Quick access to movies, notifications, and profile ⚡  
-✅ **Interactive Movie Slider** – Browse top-rated movies with a smooth carousel 🎥  
-✅ **Fast & Secure Authentication** – Sign up and log in with ease 🔐  
+👉 **Trending Movies Section** – Stay updated with the latest releases 🔥  
+👉 **Category-Based Browsing** – Easily find movies in your favorite genres 🎭  
+👉 **Real-time Notifications** – Never miss an update with a modern notification sidebar 🔔  
+👉 **Sleek & Modern UI** – Fully responsive with an intuitive design ✨  
+👉 **Sidebar Navigation** – Quick access to movies, notifications, and profile ⚡  
+👉 **Interactive Movie Slider** – Browse top-rated movies with a smooth carousel 🎥  
+👉 **Fast & Secure Authentication** – Sign up and log in with ease 🔐  
 
 ---
 
 ## 🚀 **Installation & Setup**  
 
-### **1️⃣ Clone the Repository**  
+### **1⃣ Clone the Repository**  
 ```sh
 git clone https://github.com/DEEP992006/movie-downloader.git
 cd movie-downloader
 ```
 
-### **2️⃣ Backend Setup**  
+### **2⃣ Backend Setup**  
 ```sh
 cd backend
 npm install or yarn   # Install dependencies
@@ -48,7 +50,7 @@ Your backend will be live at **`http://localhost:3000`**.
 
 ---
 
-### **3️⃣ Frontend Setup**  
+### **3⃣ Frontend Setup**  
 ```sh
 cd ..
 npm install or yarn    # Install dependencies
@@ -58,7 +60,7 @@ Your frontend will be live at **`http://localhost:3000`**.
 
 ---
 
-## 📂 **Project Structure**  
+## 📚 **Project Structure**  
 
 ```
 movie-downloader/
@@ -70,7 +72,6 @@ movie-downloader/
 │   ├── package.json    # Backend dependencies
 │   ├── yarn.lock       # Package lock
 │
-
 ├── public/         # Static assets
 └────────src/
 │       ├── assets/     # Images & icons
@@ -101,7 +102,7 @@ movie-downloader/
 
 ## 🔗 **API Endpoints**  
 
-### 🔹 **Movies API**  
+### 👉 **Movies API**  
 | Method | Endpoint                    | Description |
 |--------|-----------------------------|-------------|
 | GET    | `/movie/`                    | Fetch all movies |
@@ -113,13 +114,13 @@ movie-downloader/
 | POST   | `/movie/new`                 | Upload a new movie |
 | DELETE | `/movie/:id`                 | Delete a movie |
 
-### 🔹 **User Authentication API**  
+### 👉 **User Authentication API**  
 | Method | Endpoint        | Description |
 |--------|----------------|-------------|
 | POST   | `/api/signup`  | Register a new user |
 | POST   | `/api/login`   | Authenticate a user |
 
-### 🔹 **Notifications API**  
+### 👉 **Notifications API**  
 | Method | Endpoint                        | Description |
 |--------|---------------------------------|-------------|
 | GET    | `/api/notifications`            | Fetch all notifications |
@@ -132,10 +133,10 @@ movie-downloader/
 
 ## 🎨 **UI & UX Enhancements**  
 
-✨ **Framer Motion Animations** – Smooth transitions and interactions 🎭  
+🌟 **Framer Motion Animations** – Smooth transitions and interactions 🎭  
 📱 **Fully Responsive Design** – Works flawlessly on mobile & desktop 📲  
-📂 **Sidebar Navigation** – Easy access to movies, notifications, and profile 🏆  
-🎞️ **Movie Slider** – Browse trending movies with an interactive carousel 🎡  
+📚 **Sidebar Navigation** – Easy access to movies, notifications, and profile 🏆  
+🎭 **Movie Slider** – Browse trending movies with an interactive carousel 🎡  
 
 ---
 
@@ -159,10 +160,10 @@ movie-downloader/
 
 ## 🌟 **Future Enhancements**  
 
-🔹 **Movie Ratings & Reviews** ⭐  
-🔹 **User Watchlist & Favorites** 📌  
-🔹 **Admin Panel for Moderation** ⚙️  
-🔹 **Dark Mode UI** 🌙  
+👉 **Movie Ratings & Reviews** ⭐  
+👉 **User Watchlist & Favorites** 📌  
+👉 **Admin Panel for Moderation** ⚙️  
+👉 **Dark Mode UI** 🌙  
 
 ---
 
@@ -174,6 +175,5 @@ This project is **open-source** under the **MIT License**.
 
 ---
 
-### 🎬 **Deep Movie Downloader – Your Ultimate Movie Experience!** 🍿  
+### 🎬 **Deep Movie Downloader – Your Ultimate Movie Experience!** 🍿
 
-This **README** is designed to look **sleek and professional** while keeping it **engaging and easy to navigate**. 🚀🔥 Let me know if you want any more refinements!
